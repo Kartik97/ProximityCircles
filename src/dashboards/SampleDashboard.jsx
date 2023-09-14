@@ -1,14 +1,24 @@
 import { BaseDashboard } from "@microsoft/teamsfx-react";
-
-import ChartWidget from "../widgets/ChartWidget";
 import ListWidget from "../widgets/ListWidget";
-
+import DescriptionWidget from "../widgets/DescriptionWidget";
 export default class SampleDashboard extends BaseDashboard {
+  constructor(props) {
+    super(props);
+    this.state = {
+      description:null
+    };
+  }
+
+  setDescription = (desc) => {
+    this.setState(desc);
+  }
+
   layout() {
     return (
       <>
-        <ListWidget />
-        <ChartWidget />
+        <ListWidget desc={this.setDescription}/>
+        
+        <DescriptionWidget description={this.state.description}/>
       </>
     );
   }
