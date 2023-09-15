@@ -1,6 +1,6 @@
 import "../styles/ListWidget.css";
 import { Button, Text } from "@fluentui/react-components";
-import { List28Filled, Mic32Regular, MicOff32Regular,ToggleLeft48Regular,ToggleRight48Regular } from "@fluentui/react-icons";
+import { List28Filled, Mic32Regular, MicOff32Regular,ToggleLeft48Regular,ToggleRight48Regular,AddCircle32Regular } from "@fluentui/react-icons";
 import { BaseWidget } from "@microsoft/teamsfx-react";
 import TopicListWidget from "./TopicListWidget";
 import { getListData } from "../services/listService";
@@ -258,7 +258,9 @@ class ListWidget extends BaseWidget {
 
 
         <Text>  Your Proxmity Circles    </Text>
+        
         {(this.state.recordingStatus !== "recording") ? <Button icon={<MicOff32Regular />} appearance="transparent" onClick={()=> this.setAudioControls()}/>:<Button icon={<Mic32Regular />} appearance="transparent" onClick={()=> this.setAudioControls()}/>}
+        {<Button icon={<AddCircle32Regular />}></Button>}
       </div>
     );
   }
