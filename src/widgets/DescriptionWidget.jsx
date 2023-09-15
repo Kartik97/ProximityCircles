@@ -1,5 +1,5 @@
 import "../styles/ListWidget.css";
-
+import { Text } from "@fluentui/react-components";
 import { BaseWidget } from "@microsoft/teamsfx-react";
 
 
@@ -8,7 +8,10 @@ export default class DescriptionWidget extends BaseWidget {
 
  header(){
   return (
-    <div> Your Description</div>
+    <div className="listheader">
+      <Text size={400}>  Description    </Text>
+     
+      </div>
   )
  }
 

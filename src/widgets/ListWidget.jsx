@@ -1,6 +1,6 @@
 import "../styles/ListWidget.css";
 import { Button, Text } from "@fluentui/react-components";
-import { List28Filled, Mic32Regular, MicOff32Regular } from "@fluentui/react-icons";
+import { List28Filled, Mic32Regular, MicOff32Regular,ToggleLeft48Regular,ToggleRight48Regular } from "@fluentui/react-icons";
 import { BaseWidget } from "@microsoft/teamsfx-react";
 import TopicListWidget from "./TopicListWidget";
 import { getListData } from "../services/listService";
@@ -23,7 +23,8 @@ class ListWidget extends BaseWidget {
       recordingStatus:"inactive",
       audio:null,
       // audioChunks: []
-      audioFile:null
+      audioFile:null,
+      toggle:true,
     };
     this.mediaRecorder = createRef();
     this.stream = createRef();
@@ -67,12 +68,13 @@ class ListWidget extends BaseWidget {
 
   async setAudioControls() {
     console.log("ASAS");
-    if(this.permission.current === null || !this.permission.current) {await this.getMicrophonePermission();}
+    //if(this.permission.current === null || !this.permission.current) {await this.getMicrophonePermission();}
     // TODO: add toggling of record and stop record button
 
 
-    if (this.permission.current) {
+    //if (this.permission.current) {
       // console.log("Inside state permission",this.permission.current,this.recordingStatus.current);
+    if (true) {
       if(this.state.recordingStatus !== "recording"){
         console.log("Statryed recording");
         this.startRecording();
@@ -106,11 +108,16 @@ class ListWidget extends BaseWidget {
     }
   }
 
+  toggleButton() {
+    console.log("Toggle ");
+    this.setState({toggle:!this.state.toggle});
+  }
+
   startRecording() {
     this.setRecordingStatus("recording");
     // this.recordingStatus.current = "recording";
     //create new Media recorder instance using the stream
-    console.log("startrecording",this.stream.current);
+    /*console.log("startrecording",this.stream.current);
     let media = new MediaRecorder(this.stream.current, { type: this.state.mimeType });
     console.log("AAAAAAA");
     //set the MediaRecorder instance to the mediaRecorder ref
@@ -125,14 +132,14 @@ class ListWidget extends BaseWidget {
       console.log("Inside mediaRecorder",event.data);
       this.setAudioChunks(localAudioChunks);
     };
-    console.log("Chuncks",localAudioChunks);
+    console.log("Chuncks",localAudioChunks);*/
   }
 
   stopRecording() {
     this.setRecordingStatus("inactive");
     // this.recordingStatus.current = "stopped";
     //stops the recording instance
-    this.mediaRecorder.current.stop();
+    /*this.mediaRecorder.current.stop();
     this.mediaRecorder.current.onstop = () => {
       //creates a blob file from the audiochunks data
       const audioBlob = new Blob(this.audioChunks.current, { type: this.mimeType });
@@ -174,7 +181,7 @@ class ListWidget extends BaseWidget {
 
       // Remove the <a> element from the DOM (optional)
       document.body.removeChild(downloadLink);
-    };
+    };*/
   }
 
   handleFileUpload(e){
@@ -224,6 +231,19 @@ class ListWidget extends BaseWidget {
         {this.header()}
         {this.body()}
         {this.footer()}
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         {this.state.selectedItem && (
           <TopicListWidget data={this.state.selectedItem.topics} desc={this.props.desc}/>
         )}
@@ -233,10 +253,12 @@ class ListWidget extends BaseWidget {
 
   header() {
     return (
-      <div>
+      <div className="listheader">
         <List28Filled />
-        <Text>Your Teams</Text>
-        {(this.state.recordingStatus !== "recording") ? <Button icon={<Mic32Regular />} appearance="transparent" onClick={()=> this.setAudioControls()}/>:<Button icon={<MicOff32Regular />} appearance="transparent" onClick={()=> this.setAudioControls()}/>}
+
+
+        <Text>  Your Proxmity Circles    </Text>
+        {(this.state.recordingStatus !== "recording") ? <Button icon={<MicOff32Regular />} appearance="transparent" onClick={()=> this.setAudioControls()}/>:<Button icon={<Mic32Regular />} appearance="transparent" onClick={()=> this.setAudioControls()}/>}
       </div>
     );
   }
@@ -247,8 +269,11 @@ class ListWidget extends BaseWidget {
         
         {this.state.data?.map((t) => (
           <div key={`${t.id}-div`}>
+
             <div className="divider" />
+
             <Text className="title">{t.title}</Text>
+            {this.state.toggle === true ? <Button icon={<ToggleLeft48Regular/>} appearance="transparent" onClick={() => this.toggleButton()} />:<Button icon={<ToggleRight48Regular/>} appearance="transparent" onClick={() => this.toggleButton()} />}
             <Button onClick={() => this.openTopics(t)}>View Topics</Button>
             {/* {this.state.audio && <audio controls src={this.state.audio}></audio>} */}
             {/* {this.state.audio && <input type="file" accept="audio/*" onChange={(e) => this.handleFileUpload(e)} />} */}

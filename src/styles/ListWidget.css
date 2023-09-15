@@ -28,3 +28,9 @@
   justify-content: center;
   height: 100%;
 }
+
+.listheader{
+  display:flex;
+  justify-content: space-between;
+  font-size: 100px;
+}
